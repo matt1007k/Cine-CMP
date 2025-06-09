@@ -40,8 +40,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LoginScreen(onNavHome: () -> Unit, vm: LoginViewModel = koinViewModel(), authViewModel: AuthViewModel = koinViewModel()) {
-
+fun LoginScreen(onNavHome: () -> Unit) {
+    val vm: LoginViewModel = koinViewModel()
+    val authViewModel: AuthViewModel = koinViewModel()
     val state = vm.uiState
     val stateLogin by authViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -81,6 +82,9 @@ fun LoginScreen(onNavHome: () -> Unit, vm: LoginViewModel = koinViewModel(), aut
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            BoxWithConstraints {
+                Text("Width: $maxWidth", style = MaterialTheme.typography.bodyLarge)
+            }
             Text(
                 "Welcome to CornPass $width", modifier =
                     Modifier
@@ -117,7 +121,6 @@ fun LoginScreen(onNavHome: () -> Unit, vm: LoginViewModel = koinViewModel(), aut
                 value = state.email,
                 onValueChange = {
                     vm.onChangeEmail(it)
-                    vm.validateEmail()
                 },
                 label = "Email",
                 leadingIcon = {
@@ -135,7 +138,6 @@ fun LoginScreen(onNavHome: () -> Unit, vm: LoginViewModel = koinViewModel(), aut
                 value = state.password,
                 onValueChange = {
                     vm.onChangePassword(it)
-                    vm.validatePassword()
                 },
                 label = "Password",
                 leadingIcon = {
@@ -240,7 +242,7 @@ private fun ButtonIcon(onClick: () -> Unit, label: String, icon: Painter, modifi
 fun LoginScreenPreview() {
     AppTheme {
         Surface {
-            LoginScreen(onNavHome = {},vm = koinViewModel(), authViewModel = koinViewModel())
+            LoginScreen(onNavHome = {})
         }
 
     }
