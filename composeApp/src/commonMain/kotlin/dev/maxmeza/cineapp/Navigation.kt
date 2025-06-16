@@ -1,5 +1,7 @@
 package dev.maxmeza.cineapp
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
@@ -17,6 +19,7 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun NavigationRoot() {
     val scope = rememberCoroutineScope()
@@ -43,35 +46,40 @@ fun NavigationRoot() {
             }
         }
     }
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) {
-        NavHost(navController = navController, startDestination = if(state.tokens != null) SubGraph.Dashboard else SubGraph.Onboarding) {
-            navigation<SubGraph.Onboarding>(startDestination = AppDestination.Start) {
-                composable<AppDestination.Start> {
-                    StartScreen(onLoginClick = {
-                        navController.navigate(AppDestination.Login)
-                    })
-                }
+    SharedTransitionLayout {
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
             }
-            navigation<SubGraph.Auth>(startDestination = AppDestination.Login) {
-                composable<AppDestination.Login> {
-                    LoginScreen(
-                        onNavHome = {
-                            navController.navigate(AppDestination.Home)
-                        }
-                    )
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = if (state.tokens != null) SubGraph.Dashboard else SubGraph.Onboarding
+            ) {
+                navigation<SubGraph.Onboarding>(startDestination = AppDestination.Start) {
+                    composable<AppDestination.Start> {
+                        StartScreen(onLoginClick = {
+                            navController.navigate(AppDestination.Login)
+                        })
+                    }
                 }
-            }
+                navigation<SubGraph.Auth>(startDestination = AppDestination.Login) {
+                    composable<AppDestination.Login> {
+                        LoginScreen(
+                            onNavHome = {
+                                navController.navigate(AppDestination.Home)
+                            }
+                        )
+                    }
+                }
 
-            navigation<SubGraph.Dashboard>(startDestination = AppDestination.Home) {
-                composable<AppDestination.Home> {
-                    HomeScreen()
-                }
+                navigation<SubGraph.Dashboard>(startDestination = AppDestination.Home) {
+                    composable<AppDestination.Home> {
+                        HomeScreen()
+                    }
             }
         }
+    }
     }
 }
 

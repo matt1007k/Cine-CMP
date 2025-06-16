@@ -36,14 +36,11 @@ fun HomeScreen() {
     val authState by authViewModel.uiState.collectAsState()
     Scaffold {
         Column(modifier = Modifier.padding(it)) {
-            authState.user?.let {
-                Text("Bienvenido ${it.fullName}", style = MaterialTheme.typography.headlineSmall.copy(
+            authState.user?.let { user ->
+                Text("Bienvenidos ${user.fullName}", style = MaterialTheme.typography.headlineSmall.copy(
                     fontSize = 20.sp
                 ))
             }
-
-            Text("Bienvenido ${authState.user.toString()}")
-
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),

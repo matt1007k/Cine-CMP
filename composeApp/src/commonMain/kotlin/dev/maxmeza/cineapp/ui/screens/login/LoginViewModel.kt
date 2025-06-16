@@ -15,7 +15,7 @@ class LoginViewModel : ViewModel() {
         uiState = uiState.copy(
             emailError = when {
                 uiState.email.isBlank() || uiState.email.isEmpty() -> "El correo electrónico es requerido"
-                !uiState.email.matches(Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")) -> "El correo electrónico es inválido"
+//                !uiState.email.matches(Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")) -> "El correo electrónico es inválido"
                 else -> null
             }
         )

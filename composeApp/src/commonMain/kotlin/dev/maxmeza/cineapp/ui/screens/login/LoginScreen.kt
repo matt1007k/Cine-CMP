@@ -30,8 +30,10 @@ import dev.maxmeza.cineapp.ui.AppTheme
 import dev.maxmeza.cineapp.ui.Blue
 import dev.maxmeza.cineapp.ui.ColorText
 import dev.maxmeza.cineapp.ui.common.CineTextField
+import dev.maxmeza.cineapp.ui.component.NativeButton
 import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.controller.SnackbarEvent
+import dev.maxmeza.cineapp.ui.extraColor
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.util.AppLogger
 import kotlinx.coroutines.launch
@@ -50,7 +52,7 @@ fun LoginScreen(onNavHome: () -> Unit) {
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(stateLogin.error) {
-        if(stateLogin.error != "") {
+        if (stateLogin.error != "") {
             scope.launch {
                 SnackbarController.sendEvent(
                     event = SnackbarEvent(
@@ -64,7 +66,7 @@ fun LoginScreen(onNavHome: () -> Unit) {
 
     LaunchedEffect(stateLogin.user) {
         AppLogger.i("LoginScreen", stateLogin.user.toString())
-        if(stateLogin.user != null) {
+        if (stateLogin.user != null) {
             onNavHome()
         }
     }
@@ -105,14 +107,26 @@ fun LoginScreen(onNavHome: () -> Unit) {
                 textAlign = TextAlign.Center
             )
 
+            var counter by remember { mutableStateOf(0) }
 
+            NativeButton(
+                label = "Button Native",
+                onClick = {
+                    counter++
+                },
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(50.dp)
+            )
+
+            Text("Counter:: $counter")
 
             Image(
                 painter = painterResource(Res.drawable.ic_logo_cine),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 52.dp)
+                    .padding(top = 52.dp),
             )
 
             Spacer(Modifier.height(32.dp))
@@ -147,6 +161,7 @@ fun LoginScreen(onNavHome: () -> Unit) {
                 supportingText = state.passwordError,
                 modifier = Modifier
                     .fillMaxWidth()
+
             )
 
             TextButton(onClick = {}, modifier = Modifier.align(Alignment.End)) {
@@ -201,7 +216,7 @@ fun LoginScreen(onNavHome: () -> Unit) {
 
             }
         }
-        if(stateLogin.isLoading) {
+        if (stateLogin.isLoading) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()

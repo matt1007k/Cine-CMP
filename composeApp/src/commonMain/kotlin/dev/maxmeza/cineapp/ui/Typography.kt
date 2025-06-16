@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import cineapp.composeapp.generated.resources.Res
 import cineapp.composeapp.generated.resources.sf_ui_display_black
 import cineapp.composeapp.generated.resources.sf_ui_display_bold
@@ -47,3 +48,27 @@ sealed class CustomFont() {
             )
     }
 }
+
+val SfUiDisplay @Composable get() = FontFamily(
+    CustomFont.sfUiDisplayRegularFont,
+    CustomFont.sfUiDisplayMediumFont,
+    CustomFont.sfUiDisplayBoldFont,
+    CustomFont.sfUiDisplayBlackFont,
+)
+
+val Typography @Composable get() = Typography(
+    headlineSmall = TextStyle(
+        fontFamily = SfUiDisplay,
+        fontWeight = FontWeight.Black,
+        fontSize = 22.sp
+    ),
+    displayLarge = TextStyle(
+        fontFamily = SfUiDisplay,
+        fontWeight = FontWeight.Black
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = SfUiDisplay,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+)

@@ -1,7 +1,10 @@
 package dev.maxmeza.cineapp.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -10,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 val lightScheme = lightColorScheme(
@@ -23,6 +27,20 @@ val darkScheme = darkColorScheme(
     secondary = Color(0XFFFFFFFF)
 )
 
+@Composable
+fun extendedColor(light: Color, dark: Color): Color {
+    return if(isSystemInDarkTheme()) dark else light
+}
+
+val ColorScheme.extraColor: Color @Composable get() = extendedColor(
+    light = Color(color = 0xFF000000),
+    dark = Color(color = 0xFFFFFFFF)
+)
+
+val Shapes = Shapes(
+    extraLarge = RoundedCornerShape(5.dp)
+)
+
 
 @Composable
 fun AppTheme(
@@ -31,26 +49,9 @@ fun AppTheme(
 ) {
     val colorScheme = if (isDarkTheme) darkScheme else lightScheme
 
-    val typography = Typography(
-        headlineSmall = TextStyle(
-            fontFamily = FontFamily(CustomFont.sfUiDisplayBlackFont),
-            fontWeight = FontWeight.Black,
-            fontSize = 22.sp
-        ),
-        displayLarge = TextStyle(
-            fontFamily = FontFamily(CustomFont.sfUiDisplayBlackFont),
-            fontWeight = FontWeight.Black
-        ),
-        bodyLarge = TextStyle(
-            fontFamily = FontFamily(CustomFont.sfUiDisplayMediumFont),
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        ),
-    )
-
     MaterialTheme(
         colorScheme = colorScheme,
         content = content,
-        typography = typography
+        typography = Typography
     )
 }
