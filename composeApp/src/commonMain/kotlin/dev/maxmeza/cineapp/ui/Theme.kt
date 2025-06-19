@@ -32,9 +32,14 @@ fun extendedColor(light: Color, dark: Color): Color {
     return if(isSystemInDarkTheme()) dark else light
 }
 
-val ColorScheme.extraColor: Color @Composable get() = extendedColor(
-    light = Color(color = 0xFF000000),
-    dark = Color(color = 0xFFFFFFFF)
+val ColorScheme.textSecondary: Color @Composable get() = extendedColor(
+    light = Color.Gray,
+    dark = Color.LightGray
+)
+
+val ColorScheme.textPrimary: Color @Composable get() = extendedColor(
+    light = Color.Black,
+    dark = Color.White
 )
 
 val Shapes = Shapes(

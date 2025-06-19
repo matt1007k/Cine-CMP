@@ -57,6 +57,11 @@ val SfUiDisplay @Composable get() = FontFamily(
 )
 
 val Typography @Composable get() = Typography(
+    headlineMedium = TextStyle(
+        fontFamily = SfUiDisplay,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp
+    ),
     headlineSmall = TextStyle(
         fontFamily = SfUiDisplay,
         fontWeight = FontWeight.Black,

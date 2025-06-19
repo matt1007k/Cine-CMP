@@ -10,4 +10,7 @@ object ColorText {
     val Primary: Color
         @Composable
         get() = if(isSystemInDarkTheme()) Color.White else Color.Black
+    val BackgroundPrimary: Color
+        @Composable
+        get() = if(isSystemInDarkTheme()) Color.Black else Color.White
 }

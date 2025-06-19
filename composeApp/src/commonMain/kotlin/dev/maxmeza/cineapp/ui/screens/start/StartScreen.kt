@@ -35,7 +35,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun StartScreen(onLoginClick: () -> Unit ) {
+fun StartScreen(onSecond: () -> Unit ) {
     val infoWindowInsets = LocalWindowInfo.current.containerSize
 
     Box(
@@ -47,7 +47,7 @@ fun StartScreen(onLoginClick: () -> Unit ) {
         Scaffold(
             bottomBar = {
                 Button(
-                    onClick = onLoginClick,
+                    onClick = onSecond,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
@@ -134,6 +134,6 @@ fun StartScreen(onLoginClick: () -> Unit ) {
 @Preview
 fun DarkStartScreenPreview() {
     AppTheme {
-        StartScreen(onLoginClick = {})
+        StartScreen(onSecond = {})
     }
 }

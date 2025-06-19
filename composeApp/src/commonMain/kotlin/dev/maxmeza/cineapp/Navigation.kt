@@ -13,6 +13,7 @@ import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.ui.screens.home.HomeScreen
 import dev.maxmeza.cineapp.ui.screens.login.LoginScreen
+import dev.maxmeza.cineapp.ui.screens.second.SecondScreen
 import dev.maxmeza.cineapp.ui.screens.start.StartScreen
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -58,7 +59,12 @@ fun NavigationRoot() {
             ) {
                 navigation<SubGraph.Onboarding>(startDestination = AppDestination.Start) {
                     composable<AppDestination.Start> {
-                        StartScreen(onLoginClick = {
+                        StartScreen(onSecond = {
+                            navController.navigate(AppDestination.Second)
+                        })
+                    }
+                    composable<AppDestination.Second> {
+                        SecondScreen(onLoginClick = {
                             navController.navigate(AppDestination.Login)
                         })
                     }

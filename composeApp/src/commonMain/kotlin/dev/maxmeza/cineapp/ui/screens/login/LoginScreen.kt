@@ -30,10 +30,8 @@ import dev.maxmeza.cineapp.ui.AppTheme
 import dev.maxmeza.cineapp.ui.Blue
 import dev.maxmeza.cineapp.ui.ColorText
 import dev.maxmeza.cineapp.ui.common.CineTextField
-import dev.maxmeza.cineapp.ui.component.NativeButton
 import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.controller.SnackbarEvent
-import dev.maxmeza.cineapp.ui.extraColor
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.util.AppLogger
 import kotlinx.coroutines.launch
@@ -65,169 +63,160 @@ fun LoginScreen(onNavHome: () -> Unit) {
     }
 
     LaunchedEffect(stateLogin.user) {
-        AppLogger.i("LoginScreen", stateLogin.user.toString())
+        AppLogger.i("LaunchedEffect:: LoginScreen", stateLogin.user.toString())
         if (stateLogin.user != null) {
             onNavHome()
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-    ) {
-
-        Column(
+    Surface {
+        Box(
             modifier = Modifier
-                .width(if (width >= 450) 450.dp else width.dp)
-                .safeDrawingPadding()
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState())
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
         ) {
-            BoxWithConstraints {
-                Text("Width: $maxWidth", style = MaterialTheme.typography.bodyLarge)
-            }
-            Text(
-                "Welcome to CornPass $width", modifier =
-                    Modifier
+
+            Column(
+                modifier = Modifier
+                    .width(if (width >= 450) 450.dp else width.dp)
+                    .safeDrawingPadding()
+                    .paddingContainer()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                BoxWithConstraints {
+                    Text("Width: $maxWidth", style = MaterialTheme.typography.bodyLarge)
+                }
+                Text(
+                    "Welcome to CornPass $width", modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 32.dp), // bodyLarge
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Blue,
+                    ),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    "Let’s Sign You In! 🍿", modifier =
+                        Modifier
+                            .fillMaxWidth(),
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    textAlign = TextAlign.Center
+                )
+
+                Image(
+                    painter = painterResource(Res.drawable.ic_logo_cine),
+                    contentDescription = "",
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp), // bodyLarge
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = Blue,
-                ),
-                textAlign = TextAlign.Center
-            )
-            Text(
-                "Let’s Sign You In! 🍿", modifier =
-                    Modifier
-                        .fillMaxWidth(),
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                textAlign = TextAlign.Center
-            )
-
-            var counter by remember { mutableStateOf(0) }
-
-            NativeButton(
-                label = "Button Native",
-                onClick = {
-                    counter++
-                },
-                modifier = Modifier
-                    .width(200.dp)
-                    .height(50.dp)
-            )
-
-            Text("Counter:: $counter")
-
-            Image(
-                painter = painterResource(Res.drawable.ic_logo_cine),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 52.dp),
-            )
-
-            Spacer(Modifier.height(32.dp))
-
-            CineTextField(
-                value = state.email,
-                onValueChange = {
-                    vm.onChangeEmail(it)
-                },
-                label = "Email",
-                leadingIcon = {
-                    Icon(Icons.Outlined.Email, contentDescription = "Icon leading")
-                },
-                isError = state.emailError != null,
-                supportingText = state.emailError,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-            Spacer(Modifier.height(20.dp))
-
-            CineTextField(
-                value = state.password,
-                onValueChange = {
-                    vm.onChangePassword(it)
-                },
-                label = "Password",
-                leadingIcon = {
-                    Icon(Icons.Outlined.Lock, contentDescription = "Icon image")
-                },
-                isError = state.passwordError != null,
-                supportingText = state.passwordError,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-            )
-
-            TextButton(onClick = {}, modifier = Modifier.align(Alignment.End)) {
-                Text("Forgot password?")
-            }
-
-            Spacer(Modifier.height(32.dp))
-
-            Button(
-                onClick = {
-                    scope.launch {
-                        authViewModel.login(state.email, state.password)
-                    }
-                },
-                enabled = state.isFormValid,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(vertical = 16.dp)
-            ) {
-                Text("Sign in")
-            }
-
-            Spacer(Modifier.height(24.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                ButtonIcon(
-                    onClick = {},
-                    label = "Google",
-                    icon = painterResource(Res.drawable.google_logo),
-                    modifier = Modifier.weight(1f)
+                        .padding(top = 52.dp),
                 )
-                ButtonIcon(
-                    onClick = {},
-                    label = "Facebook",
-                    icon = painterResource(Res.drawable.facebook_logo),
-                    modifier = Modifier.weight(1f)
+
+                Spacer(Modifier.height(32.dp))
+
+                CineTextField(
+                    value = state.email,
+                    onValueChange = vm::onChangeEmail,
+                    label = "Email",
+                    leadingIcon = {
+                        Icon(Icons.Outlined.Email, contentDescription = "Icon leading")
+                    },
+                    isError = state.emailError != null,
+                    supportingText = state.emailError,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
-            }
-            Spacer(Modifier.height(32.dp))
-            TextButton(
-                onClick = {}, modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    Text("Don't have an account?", color = ColorText.Primary)
-                    Text("Create one")
+
+                Spacer(Modifier.height(20.dp))
+
+                CineTextField(
+                    value = state.password,
+                    onValueChange = vm::onChangePassword,
+                    label = "Password",
+                    leadingIcon = {
+                        Icon(Icons.Outlined.Lock, contentDescription = "Icon image")
+                    },
+                    isError = state.passwordError != null,
+                    supportingText = state.passwordError,
+                    modifier = Modifier
+                        .fillMaxWidth()
+
+                )
+
+                TextButton(onClick = {}, modifier = Modifier.align(Alignment.End)) {
+                    Text("Forgot password?")
                 }
 
+                Spacer(Modifier.height(32.dp))
+
+                Button(
+                    onClick = {
+                        scope.launch {
+                            authViewModel.login(state.email, state.password)
+                        }
+                    },
+                    enabled = state.isFormValid,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentPadding = PaddingValues(vertical = 16.dp)
+                ) {
+                    Text("Sign in")
+                }
+
+                Spacer(Modifier.height(24.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    ButtonIcon(
+                        onClick = {},
+                        label = "Google",
+                        icon = painterResource(Res.drawable.google_logo),
+                        modifier = Modifier.weight(1f)
+                    )
+                    ButtonIcon(
+                        onClick = {},
+                        label = "Facebook",
+                        icon = painterResource(Res.drawable.facebook_logo),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(Modifier.height(32.dp))
+                TextButton(
+                    onClick = {}, modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(5.dp)
+                    ) {
+                        Text("Don't have an account?", color = ColorText.Primary)
+                        Text("Create one")
+                    }
+
+                }
             }
-        }
-        if (stateLogin.isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surfaceContainer),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator()
+            if (stateLogin.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.surfaceContainer),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
             }
         }
     }
 
+
+
+}
+
+@Composable
+fun Modifier.paddingContainer(): Modifier {
+    return this then Modifier.padding(horizontal = 16.dp)
 }
 
 @Composable
