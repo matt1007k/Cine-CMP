@@ -8,6 +8,7 @@ import dev.maxmeza.cineapp.domain.repository.AuthRepository
 import dev.maxmeza.cineapp.domain.useCases.LoginUseCases
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.ui.screens.login.LoginViewModel
+import dev.maxmeza.cineapp.ui.screens.search.SearchViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -41,6 +42,7 @@ val appModule = module {
 val viewModelsModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::AuthViewModel)
+    viewModelOf(::SearchViewModel)
 }
 
 expect  val nativeModule: Module

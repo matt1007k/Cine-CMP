@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cineapp.composeapp.generated.resources.Res
+import cineapp.composeapp.generated.resources.google_logo
 import cineapp.composeapp.generated.resources.ic_logo_cine
 import dev.maxmeza.cineapp.ui.AppTheme
 import dev.maxmeza.cineapp.ui.component.NativeButton
@@ -98,9 +99,12 @@ fun SecondScreenPreview() {
                         .offset(1.dp)
                     ) {
                     Image(
-                        painterResource(Res.drawable.ic_logo_cine),
+                        painterResource(Res.drawable.google_logo),
                         contentDescription = "",
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(CircleShape)
                     )
                 }
 
@@ -110,12 +114,18 @@ fun SecondScreenPreview() {
 
 }
 
+
+
 @Composable
 fun Avatar(
     strokeWidth: Float,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
+    // https://developer.android.com/develop/ui/compose/graphics/draw/shapes
+//    val scallopShape = remember {
+//        RoundedPolygonShape
+//    }
     val stroke = remember(strokeWidth) {
         Stroke(width = strokeWidth)
     }

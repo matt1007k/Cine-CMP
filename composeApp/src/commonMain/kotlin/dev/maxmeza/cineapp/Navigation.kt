@@ -13,6 +13,7 @@ import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.ui.screens.home.HomeScreen
 import dev.maxmeza.cineapp.ui.screens.login.LoginScreen
+import dev.maxmeza.cineapp.ui.screens.search.SearchScreen
 import dev.maxmeza.cineapp.ui.screens.second.SecondScreen
 import dev.maxmeza.cineapp.ui.screens.start.StartScreen
 import kotlinx.coroutines.launch
@@ -81,7 +82,15 @@ fun NavigationRoot() {
 
                 navigation<SubGraph.Dashboard>(startDestination = AppDestination.Home) {
                     composable<AppDestination.Home> {
-                        HomeScreen()
+                        HomeScreen(goSearch = {
+                            navController.navigate(AppDestination.Search)
+                        })
+                    }
+
+                    composable<AppDestination.Search> {
+                        SearchScreen(onBack = {
+                            navController.popBackStack()
+                        })
                     }
             }
         }
@@ -107,4 +116,6 @@ sealed class AppDestination {
     object Login: AppDestination()
     @Serializable
     object Home: AppDestination()
+    @Serializable
+    object Search: AppDestination()
 }
