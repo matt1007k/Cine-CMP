@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.flowOn
 class LoginUseCases(private val authRepository: AuthRepository) {
     suspend fun invoke(email: String, password: String) = flow<Result<LoginResult>> {
         emit(authRepository.login(email = email, password = password))
-
     }.catch { error ->
         emit(Result.failure(error))
     }.flowOn(Dispatchers.IO)

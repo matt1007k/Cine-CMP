@@ -56,7 +56,8 @@ fun SecondScreen(onLoginClick: () -> Unit) {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .safeDrawingPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -98,7 +99,7 @@ fun SecondScreen(onLoginClick: () -> Unit) {
                 Text("Let's Go!")
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

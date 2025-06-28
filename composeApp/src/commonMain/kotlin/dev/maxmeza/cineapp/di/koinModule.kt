@@ -5,8 +5,10 @@ import dev.maxmeza.cineapp.data.repository.AuthRepositoryImpl
 import dev.maxmeza.cineapp.data.service.ApiService
 import dev.maxmeza.cineapp.data.service.AuthService
 import dev.maxmeza.cineapp.domain.repository.AuthRepository
+import dev.maxmeza.cineapp.domain.useCases.HomeUseCase
 import dev.maxmeza.cineapp.domain.useCases.LoginUseCases
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
+import dev.maxmeza.cineapp.ui.screens.home.HomeViewModel
 import dev.maxmeza.cineapp.ui.screens.login.LoginViewModel
 import dev.maxmeza.cineapp.ui.screens.search.SearchViewModel
 import org.koin.core.context.startKoin
@@ -33,6 +35,7 @@ val dataModule = module {
 
 val domainModule = module {
     factoryOf(::LoginUseCases)
+    factoryOf(::HomeUseCase)
 }
 
 val appModule = module {
@@ -43,6 +46,7 @@ val viewModelsModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::AuthViewModel)
     viewModelOf(::SearchViewModel)
+    viewModelOf(::HomeViewModel)
 }
 
 expect  val nativeModule: Module

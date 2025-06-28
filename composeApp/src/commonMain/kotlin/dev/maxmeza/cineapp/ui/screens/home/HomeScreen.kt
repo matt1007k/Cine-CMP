@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.maxmeza.cineapp.ui.AppTheme
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.ui.screens.login.paddingContainer
@@ -41,6 +43,24 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(goSearch: () -> Unit) {
     val authViewModel: AuthViewModel = koinViewModel()
     val authState by authViewModel.uiState.collectAsState()
+
+    val homeViewModel: HomeViewModel = koinViewModel()
+    val homeState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+    when(homeState) {
+        HomeUiState.isLoading -> {
+            CircularProgressIndicator()
+        }
+        is HomeUiState.Error -> {
+            val errorMessage = (homeState as HomeUiState.Error).message
+            Text("Error $errorMessage")
+        }
+        is HomeUiState.Success -> {
+            val data = (homeState as HomeUiState.Success).data
+            Text("Data: ${data?.fullName}")
+        }
+    }
+
     Scaffold(
         topBar = {
             Row(

@@ -1,5 +1,6 @@
 package dev.maxmeza.cineapp.ui.screens.search
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronLeft
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,6 +60,9 @@ fun SearchScreen(
                 value = query,
                 onValueChange = viewModel::onChangeQueryChange,
                 label = "Search...",
+                leadingIcon = {
+                    Icon(Icons.Outlined.Search, contentDescription = "Search Icon")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .paddingContainer()
