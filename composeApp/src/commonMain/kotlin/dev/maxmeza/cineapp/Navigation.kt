@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -11,9 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import dev.maxmeza.cineapp.ui.common.ObserveAsEvents
 import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
+import dev.maxmeza.cineapp.ui.screens.chat.ChatScreen
+import dev.maxmeza.cineapp.ui.screens.chat.ChatViewModel
+import dev.maxmeza.cineapp.ui.screens.graphic.GraphicScreen
 import dev.maxmeza.cineapp.ui.screens.home.HomeScreen
 import dev.maxmeza.cineapp.ui.screens.login.LoginScreen
 import dev.maxmeza.cineapp.ui.screens.search.SearchScreen
+import dev.maxmeza.cineapp.ui.screens.search.SearchViewModel
 import dev.maxmeza.cineapp.ui.screens.second.SecondScreen
 import dev.maxmeza.cineapp.ui.screens.start.StartScreen
 import kotlinx.coroutines.launch
@@ -60,9 +65,10 @@ fun NavigationRoot() {
             ) {
                 navigation<SubGraph.Onboarding>(startDestination = AppDestination.Start) {
                     composable<AppDestination.Start> {
-                        StartScreen(onSecond = {
-                            navController.navigate(AppDestination.Second)
-                        })
+//                        StartScreen(onSecond = {
+//                            navController.navigate(AppDestination.Second)
+//                        })
+                        ChatScreen(viewModel = koinViewModel<ChatViewModel>())
                     }
                     composable<AppDestination.Second> {
                         SecondScreen(onLoginClick = {
@@ -84,13 +90,20 @@ fun NavigationRoot() {
                     composable<AppDestination.Home> {
                         HomeScreen(goSearch = {
                             navController.navigate(AppDestination.Search)
+                        }, goGraphic = {
+                            navController.navigate(AppDestination.Graphic)
                         })
                     }
 
-                    composable<AppDestination.Search> {
+                    composable<AppDestination.Search>() {
+//                        val vm = it.sharedKoinViewModel<SearchViewModel>(navController)
                         SearchScreen(onBack = {
                             navController.popBackStack()
                         })
+                    }
+
+                    composable<AppDestination.Graphic> {
+                        GraphicScreen()
                     }
             }
         }
@@ -118,4 +131,6 @@ sealed class AppDestination {
     object Home: AppDestination()
     @Serializable
     object Search: AppDestination()
+    @Serializable
+    object Graphic: AppDestination()
 }

@@ -18,5 +18,4 @@ actual object AppLogger {
     actual fun i(tag: String, message: String) {
         Log.i(tag, message)
     }
-
 }

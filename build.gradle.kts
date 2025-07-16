@@ -8,3 +8,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.composeHotReload) apply false
 }
+
+// Build script Android
+buildscript {
+    dependencies {
+        classpath(libs.maps.secrets.gradle.plugin)
+    }
+}

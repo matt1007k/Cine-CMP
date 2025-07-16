@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,7 @@ import cineapp.composeapp.generated.resources.ic_logo_cine
 import dev.maxmeza.cineapp.ui.AppTheme
 import dev.maxmeza.cineapp.ui.Blue
 import dev.maxmeza.cineapp.ui.ColorText
-import dev.maxmeza.cineapp.ui.common.CineTextField
+import dev.maxmeza.cineapp.ui.component.CineTextField
 import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.controller.SnackbarEvent
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
@@ -46,7 +45,6 @@ fun LoginScreen(onNavHome: () -> Unit) {
     val state = vm.uiState
     val stateLogin by authViewModel.uiState.collectAsStateWithLifecycle()
 
-    val (width) = LocalWindowInfo.current.containerSize
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(stateLogin.error) {
@@ -78,16 +76,13 @@ fun LoginScreen(onNavHome: () -> Unit) {
 
             Column(
                 modifier = Modifier
-                    .width(if (width >= 450) 450.dp else width.dp)
                     .safeDrawingPadding()
                     .paddingContainer()
                     .verticalScroll(rememberScrollState())
+                    .widthIn(max = 450.dp)
             ) {
-                BoxWithConstraints {
-                    Text("Width: $maxWidth", style = MaterialTheme.typography.bodyLarge)
-                }
                 Text(
-                    "Welcome to CornPass $width", modifier =
+                    "Welcome to CornPass", modifier =
                         Modifier
                             .fillMaxWidth()
                             .padding(top = 32.dp), // bodyLarge
@@ -209,7 +204,6 @@ fun LoginScreen(onNavHome: () -> Unit) {
             }
         }
     }
-
 
 
 }

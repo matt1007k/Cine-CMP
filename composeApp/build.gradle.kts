@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +10,11 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     kotlin("plugin.serialization") version "2.1.21"
+    // Build config
+    alias(libs.plugins.gradleBuildConfig)
+
+    // Build config Android
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 kotlin {
@@ -44,6 +50,9 @@ kotlin {
             // https://insert-koin.io/docs/reference/koin-compose/compose/
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
+            // Google Maps
+            implementation(libs.google.maps.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -63,6 +72,7 @@ kotlin {
             implementation(libs.ktor.content.negotiation)
             implementation(libs.ktor.serialization.json)
             implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.websockets)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -74,6 +84,8 @@ kotlin {
 
             api(libs.datastore)
             api(libs.datastore.preferences)
+
+            implementation(libs.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -115,6 +127,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    defaultConfig {
+
+    }
 }
 
 dependencies {
@@ -132,4 +147,20 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+buildConfig {
+    packageName("dev.maxmeza.cineapp")
+
+    val properties = Properties()
+    properties.load(project.rootProject.file("local.properties").reader())
+    val apiKey = properties.getProperty("API_KEY")
+
+    buildConfigField("String", "API_KEY", apiKey)
+}
+
+// Secret file Android
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
 }

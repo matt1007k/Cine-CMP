@@ -1,12 +1,14 @@
 package dev.maxmeza.cineapp.domain.useCases
 
 import dev.maxmeza.cineapp.domain.model.User
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 
 class HomeUseCase {
     suspend fun getDemo() = flow<Result<User>> {
+        delay(2000L)
         emit(
             Result.success(
                 User(

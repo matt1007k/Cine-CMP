@@ -1,6 +1,8 @@
 package dev.maxmeza.cineapp.di
 
+import dev.maxmeza.cineapp.data.model.WebSocketClient
 import dev.maxmeza.cineapp.data.remote.KtorClient
+import dev.maxmeza.cineapp.data.remote.KtorWebSocketClient
 import dev.maxmeza.cineapp.data.repository.AuthRepositoryImpl
 import dev.maxmeza.cineapp.data.service.ApiService
 import dev.maxmeza.cineapp.data.service.AuthService
@@ -8,6 +10,7 @@ import dev.maxmeza.cineapp.domain.repository.AuthRepository
 import dev.maxmeza.cineapp.domain.useCases.HomeUseCase
 import dev.maxmeza.cineapp.domain.useCases.LoginUseCases
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
+import dev.maxmeza.cineapp.ui.screens.chat.ChatViewModel
 import dev.maxmeza.cineapp.ui.screens.home.HomeViewModel
 import dev.maxmeza.cineapp.ui.screens.login.LoginViewModel
 import dev.maxmeza.cineapp.ui.screens.search.SearchViewModel
@@ -30,6 +33,8 @@ val dataModule = module {
     single { ApiService(httpClient = KtorClient.getInstance()) }
     single { AuthService(client = KtorClient.getInstance() ) }
     factoryOf(::AuthRepositoryImpl).bind<AuthRepository>()
+    single<WebSocketClient> { KtorWebSocketClient() } // Provee la implementación del cliente WebSocket
+    factoryOf(::ChatViewModel)
 
 }
 

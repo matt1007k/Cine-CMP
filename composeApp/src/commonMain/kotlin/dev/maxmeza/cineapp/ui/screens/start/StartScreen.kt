@@ -2,16 +2,10 @@ package dev.maxmeza.cineapp.ui.screens.start
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,20 +14,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cineapp.composeapp.generated.resources.Res
-import cineapp.composeapp.generated.resources.facebook_logo
-import cineapp.composeapp.generated.resources.google_logo
 import cineapp.composeapp.generated.resources.ic_logo_cine
-import cineapp.composeapp.generated.resources.imdb_logo
 import dev.maxmeza.cineapp.ui.AppTheme
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(onSecond: () -> Unit ) {
     val infoWindowInsets = LocalWindowInfo.current.containerSize
@@ -41,7 +31,7 @@ fun StartScreen(onSecond: () -> Unit ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .scrollable(rememberScrollState(), orientation = Orientation.Vertical),
+            .verticalScroll(rememberScrollState()),
         contentAlignment = Alignment.Center
     ) {
         Scaffold(

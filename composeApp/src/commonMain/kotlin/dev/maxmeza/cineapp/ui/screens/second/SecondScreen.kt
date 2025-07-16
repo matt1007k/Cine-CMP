@@ -16,6 +16,7 @@ import cineapp.composeapp.generated.resources.Res
 import cineapp.composeapp.generated.resources.ic_logo_cine
 import cineapp.composeapp.generated.resources.start2
 import dev.maxmeza.cineapp.ui.AppTheme
+import dev.maxmeza.cineapp.ui.component.NativeButton
 import dev.maxmeza.cineapp.ui.screens.login.paddingContainer
 import dev.maxmeza.cineapp.ui.textPrimary
 import dev.maxmeza.cineapp.ui.textSecondary
@@ -29,77 +30,103 @@ fun SecondScreen(onLoginClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(backgroundPrimaryLocal),
-        contentAlignment = Alignment.BottomEnd
+            .background(backgroundPrimaryLocal)
+        ,
+        contentAlignment = Alignment.TopCenter
     ) {
-        Image(
-            painter = painterResource(Res.drawable.start2),
-            contentScale = ContentScale.Crop,
-            contentDescription = "Bg start 2",
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .fillMaxWidth()
-                .drawWithContent {
-                    drawContent()
-                    drawRect(
-                        brush = Brush.verticalGradient(
-                            colorStops = arrayOf(
-                                0.0f to Color.Transparent,
-                                0.2f to backgroundPrimaryLocal.copy(0.15f),
-                                0.7f to backgroundPrimaryLocal.copy(0.85f),
-                                1f to backgroundPrimaryLocal
-                            )
-                        ),
-                    )
-                }
-        )
 
-        Column(
+
+        Scaffold(
             modifier = Modifier
-                .fillMaxWidth()
-                .safeDrawingPadding(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxHeight()
+                .widthIn(max = 450.dp),
+            contentWindowInsets = WindowInsets.statusBars
         ) {
-            Image(
-                painter = painterResource(Res.drawable.ic_logo_cine),
-                contentScale = ContentScale.Crop,
-                contentDescription = "Logo Corn Pass",
+
+            Box(
                 modifier = Modifier
-                    .width(200.dp)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Experience Cinema Like\n  Never Before!",
-                color = MaterialTheme.colorScheme.textPrimary,
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = "Find the latest releases, explore top-rated films,\n and secure your seat today.",
-                color = MaterialTheme.colorScheme.textSecondary,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-
-            HorizontalDivider()
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Button(
-                onClick = onLoginClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(65.dp)
-                    .paddingContainer()
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomEnd
             ) {
-                Text("Let's Go!")
-            }
+                Image(
+                    painter = painterResource(Res.drawable.start2),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Bg start 2",
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .fillMaxWidth()
+                        .drawWithContent {
+                            drawContent()
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    colorStops = arrayOf(
+                                        0.0f to Color.Transparent,
+                                        0.2f to backgroundPrimaryLocal.copy(0.15f),
+                                        0.7f to backgroundPrimaryLocal.copy(0.85f),
+                                        1f to backgroundPrimaryLocal
+                                    )
+                                ),
+                            )
+                        }
+                )
 
-            Spacer(modifier = Modifier.height(10.dp))
+                NativeButton(
+                    label = "Test",
+                    onClick = {},
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+//                        .windowInsetsPadding(WindowInsets.statusBars)
+
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .safeDrawingPadding(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(Res.drawable.ic_logo_cine),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = "Logo Corn Pass",
+                        modifier = Modifier
+                            .width(200.dp)
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    Text(
+                        text = "Experience Cinema Like\n  Never Before!",
+                        color = MaterialTheme.colorScheme.textPrimary,
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Text(
+                        text = "Find the latest releases, explore top-rated films,\n and secure your seat today.",
+                        color = MaterialTheme.colorScheme.textSecondary,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    HorizontalDivider()
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Button(
+                        onClick = onLoginClick,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(65.dp)
+                            .paddingContainer()
+                    ) {
+                        Text("Let's Go!")
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            }
         }
     }
 }

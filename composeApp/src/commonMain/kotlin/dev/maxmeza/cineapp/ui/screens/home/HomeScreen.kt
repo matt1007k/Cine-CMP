@@ -19,11 +19,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.LongState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,34 +33,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.maxmeza.cineapp.domain.model.User
 import dev.maxmeza.cineapp.ui.AppTheme
+import dev.maxmeza.cineapp.ui.common.UiState
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
+import dev.maxmeza.cineapp.ui.screens.graphic.InfiniteAnimation
 import dev.maxmeza.cineapp.ui.screens.login.paddingContainer
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(goSearch: () -> Unit) {
+fun HomeScreen(goSearch: () -> Unit, goGraphic: () -> Unit) {
     val authViewModel: AuthViewModel = koinViewModel()
     val authState by authViewModel.uiState.collectAsState()
 
     val homeViewModel: HomeViewModel = koinViewModel()
     val homeState by homeViewModel.uiState.collectAsStateWithLifecycle()
-
-    when(homeState) {
-        HomeUiState.isLoading -> {
-            CircularProgressIndicator()
-        }
-        is HomeUiState.Error -> {
-            val errorMessage = (homeState as HomeUiState.Error).message
-            Text("Error $errorMessage")
-        }
-        is HomeUiState.Success -> {
-            val data = (homeState as HomeUiState.Success).data
-            Text("Data: ${data?.fullName}")
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -86,9 +76,43 @@ fun HomeScreen(goSearch: () -> Unit) {
                 .padding(it)
         ) {
             authState.user?.let { user ->
-                Text("Bienvenidos ${user.fullName}", style = MaterialTheme.typography.headlineSmall.copy(
-                    fontSize = 20.sp
-                ))
+                Text(
+                    "Bienvenidos ${user.fullName}", style = MaterialTheme.typography.headlineSmall.copy(
+                        fontSize = 20.sp
+                    ),
+                    modifier = Modifier
+                        .paddingContainer()
+                )
+            }
+            InfiniteAnimation(
+                modifier = Modifier
+                    .paddingContainer()
+            )
+
+            when (homeState) {
+                UiState.Loading -> {
+                    CircularProgressIndicator()
+                }
+
+                is UiState.Error -> {
+                    val errorMessage = (homeState as UiState.Error).message
+                    Text(
+                        "Error $errorMessage",
+                        modifier = Modifier
+                            .paddingContainer()
+                    )
+                }
+
+                is UiState.Success -> {
+                   (homeState as UiState.Success).data.let { data ->
+                        Text(
+                            "Data: ${data.fullName} name ${data.firstName}",
+                            modifier = Modifier
+                                .paddingContainer()
+                        )
+                    }
+
+                }
             }
 
             LazyRow(
@@ -97,7 +121,8 @@ fun HomeScreen(goSearch: () -> Unit) {
             ) {
                 items(8) {
                     Box(
-                        contentAlignment = Alignment.Center, modifier = Modifier
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
                             .size(100.dp)
                             .background(MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(16))
                     ) {
@@ -110,14 +135,14 @@ fun HomeScreen(goSearch: () -> Unit) {
             }
 
             Text(
-                "Grid view",
+                text = "Grid view",
                 style = MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.Black
                 )
             )
 
             Text(
-                "Grid view", style = TextStyle(
+                text = "Grid view", style = TextStyle(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Black
                 )
@@ -153,7 +178,10 @@ fun HomeScreen(goSearch: () -> Unit) {
 @Composable
 fun HomeScreenPreview() {
     AppTheme {
-        HomeScreen(goSearch = {})
+        HomeScreen(
+            goSearch = {},
+            goGraphic = {}
+        )
     }
 }
 

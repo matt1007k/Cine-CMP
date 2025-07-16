@@ -1,6 +1,5 @@
 package dev.maxmeza.cineapp.ui.screens.search
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.maxmeza.cineapp.ui.common.CineTextField
+import dev.maxmeza.cineapp.ui.component.CineTextField
 import dev.maxmeza.cineapp.ui.screens.login.paddingContainer
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
