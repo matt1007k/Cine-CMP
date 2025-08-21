@@ -14,6 +14,7 @@ import dev.maxmeza.cineapp.ui.controller.SnackbarController
 import dev.maxmeza.cineapp.ui.manager.AuthViewModel
 import dev.maxmeza.cineapp.ui.screens.chat.ChatScreen
 import dev.maxmeza.cineapp.ui.screens.chat.ChatViewModel
+import dev.maxmeza.cineapp.ui.screens.graphic.GraphDonutsScreen
 import dev.maxmeza.cineapp.ui.screens.graphic.GraphicScreen
 import dev.maxmeza.cineapp.ui.screens.home.HomeScreen
 import dev.maxmeza.cineapp.ui.screens.login.LoginScreen
@@ -68,7 +69,10 @@ fun NavigationRoot() {
 //                        StartScreen(onSecond = {
 //                            navController.navigate(AppDestination.Second)
 //                        })
-                        ChatScreen(viewModel = koinViewModel<ChatViewModel>())
+//                        ChatScreen(viewModel = koinViewModel<ChatViewModel>())
+                        GraphDonutsScreen(onSecond = {
+                            navController.navigate(AppDestination.Second)
+                        })
                     }
                     composable<AppDestination.Second> {
                         SecondScreen(onLoginClick = {

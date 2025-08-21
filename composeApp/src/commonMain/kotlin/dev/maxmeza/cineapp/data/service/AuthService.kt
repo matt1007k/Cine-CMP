@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginDto(
-    val username: String,
+    val email: String,
     val password: String
 )
 
@@ -19,12 +19,12 @@ class AuthService(
 ) {
 
     suspend fun login(email: String, password: String): Result<RemoteLoginData> {
-        AppLogger.i("LOGIN","$email $password")
+        AppLogger.i("LOGIN FORM DATA","$email $password")
        return try {
-           val result = client.post("v1/personals/login") {
-               setBody(LoginDto(username = email, password = password))
+           val result = client.post("api/v1/users/login") {
+               setBody(LoginDto(email = email, password = password))
            }.body<RemoteLoginResult>()
-           AppLogger.i("LOGIN", result.toString())
+           AppLogger.i("LOGIN DATA", result.toString())
            Result.success(result.data)
        } catch (e: Exception) {
            AppLogger.i("LOGIN","ERROR LOGIN::::" + e.toString())

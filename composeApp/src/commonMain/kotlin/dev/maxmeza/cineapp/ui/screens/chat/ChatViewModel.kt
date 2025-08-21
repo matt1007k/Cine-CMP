@@ -2,8 +2,12 @@ package dev.maxmeza.cineapp.ui.screens.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.maxmeza.cineapp.Greeting
 import dev.maxmeza.cineapp.data.model.Message
 import dev.maxmeza.cineapp.data.model.WebSocketClient
+import dev.maxmeza.cineapp.data.model.isoString
+import dev.maxmeza.cineapp.util.DateUtil
+import dev.maxmeza.cineapp.util.getOSLogo
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -91,7 +95,7 @@ class ChatViewModel(
 
     fun sendMessage(text: String) {
         if (text.isNotBlank()) {
-            val message = Message(user = "ComposeUser", message = text) // User can be dynamic
+            val message = Message(user = Greeting().greet(), message = text, timestamp = DateUtil().getDateToJSONString(), avatar = getOSLogo()) // User can be dynamic
             webSocketClient.sendMessage(message)
         }
     }

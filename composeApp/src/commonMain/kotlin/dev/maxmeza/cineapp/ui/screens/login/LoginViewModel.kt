@@ -10,7 +10,6 @@ class LoginViewModel : ViewModel() {
     var uiState by mutableStateOf(LoginUiState())
         private set
 
-
     fun validateEmail() {
         uiState = uiState.copy(
             emailError = when {

@@ -1,4 +1,4 @@
-package dev.maxmeza.cineapp.mappers
+package dev.maxmeza.cineapp.data.mappers
 
 import dev.maxmeza.cineapp.data.remote.RemoteLoginData
 import dev.maxmeza.cineapp.domain.model.LoginResult

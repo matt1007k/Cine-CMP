@@ -46,6 +46,7 @@ fun LoginScreen(onNavHome: () -> Unit) {
     val stateLogin by authViewModel.uiState.collectAsStateWithLifecycle()
 
     val scope = rememberCoroutineScope()
+//    val token by UserAppSetting().token.collectAsStateWithLifecycle(initialValue = "")
 
     LaunchedEffect(stateLogin.error) {
         if (stateLogin.error != "") {
@@ -66,6 +67,10 @@ fun LoginScreen(onNavHome: () -> Unit) {
             onNavHome()
         }
     }
+
+//    LaunchedEffect(token) {
+//        AppLogger.i("LaunchedEffect:: LoginScreen TOKEN", token)
+//    }
 
     Surface {
         Box(

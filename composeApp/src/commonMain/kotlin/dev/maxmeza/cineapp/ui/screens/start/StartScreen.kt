@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,9 +24,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(onSecond: () -> Unit ) {
-    val infoWindowInsets = LocalWindowInfo.current.containerSize
-
+fun StartScreen(onSecond: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,69 +44,65 @@ fun StartScreen(onSecond: () -> Unit ) {
                 }
             },
             modifier = Modifier
-                .width(if (infoWindowInsets.width >= 450) 420.dp else infoWindowInsets.width.dp)
+                .widthIn(max = 450.dp)
         ) {
 
-            BoxWithConstraints {
-                Box(
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface),
+
+                ) {
+
+                Image(
+                    painter = painterResource(Res.drawable.ic_logo_cine),
+                    contentDescription = "Corn Pass Logo",
+                    contentScale = ContentScale.Crop,
+                    colorFilter = ColorFilter.tint(Color.LightGray.copy(0.7f)),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surface),
+                        .width(680.dp)
+                        .rotate(-25f)
+                        .offset(y = (-70).dp)
+                )
 
-                    ) {
-
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .padding(bottom = 100.dp),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Image(
                         painter = painterResource(Res.drawable.ic_logo_cine),
-                        contentDescription = "Corn Pass Logo",
+                        contentDescription = "Logo",
                         contentScale = ContentScale.Crop,
-                        colorFilter = ColorFilter.tint(Color.LightGray.copy(0.7f)),
-                        modifier = Modifier
-                            .width(680.dp)
-                            .rotate(-25f)
-                            .offset(y = (-70).dp)
+                        modifier = Modifier.width(150.dp)
                     )
 
-                    Column(
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        "Your Gateway To The Ultimate Movie Experience",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        "Discover the latest movies and book your tickets in just a few clicks!",
+                        color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+                    HorizontalDivider(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                            .padding(bottom = 100.dp),
-                        verticalArrangement = Arrangement.Bottom,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-//                            Text("boxWithConstraintsScope maxWidth::: ${maxWidth}")
+                            .fillMaxWidth()
+                    )
 
-                        Image(
-                            painter = painterResource(Res.drawable.ic_logo_cine),
-                            contentDescription = "Logo",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.width(150.dp)
-                        )
-
-                        Spacer(modifier = Modifier.height(24.dp))
-                        Text(
-                            "Your Gateway To The Ultimate Movie Experience",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
-                        Text(
-                            "Discover the latest movies and book your tickets in just a few clicks!",
-                            color = MaterialTheme.colorScheme.secondary,
-                            textAlign = TextAlign.Center
-                        )
-
-                        Spacer(modifier = Modifier.height(24.dp))
-                        HorizontalDivider(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-
-
-                    }
 
                 }
+
             }
         }
 

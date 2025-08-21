@@ -73,6 +73,7 @@ kotlin {
             implementation(libs.ktor.serialization.json)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.websockets)
+            implementation(libs.ktor.client.auth)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -86,6 +87,10 @@ kotlin {
             api(libs.datastore.preferences)
 
             implementation(libs.datetime)
+
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -2,9 +2,8 @@ package dev.maxmeza.cineapp.data.repository
 
 import dev.maxmeza.cineapp.data.service.AuthService
 import dev.maxmeza.cineapp.domain.model.LoginResult
-import dev.maxmeza.cineapp.domain.model.User
 import dev.maxmeza.cineapp.domain.repository.AuthRepository
-import dev.maxmeza.cineapp.mappers.toDomain
+import dev.maxmeza.cineapp.data.mappers.toDomain
 
 class AuthRepositoryImpl(
     val authService: AuthService,

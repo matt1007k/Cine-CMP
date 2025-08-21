@@ -93,6 +93,7 @@ class KtorWebSocketClient : WebSocketClient {
         scope.launch {
             if (_connectionState.value && session != null) {
                 try {
+                    println("Message $message")
                     val messageJson = Json.encodeToString(Message.serializer(), message)
                     session?.send(Frame.Text(messageJson))
                     println("Sent: $messageJson")

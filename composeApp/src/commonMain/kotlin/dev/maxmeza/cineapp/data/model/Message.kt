@@ -14,7 +14,7 @@ val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
 val isoString = localDateTime.toString()
 
 @Serializable
-data class Message(val user: String, val message: String, val timestamp: String = isoString, val avatar: String = "https://mighty.tools/mockmind-api/content/human/122.jpg")
+data class Message(val user: String, val message: String, val timestamp: String, val avatar: String)
 
 interface WebSocketClient {
     fun open(url: String)

@@ -30,11 +30,12 @@ fun initKoin(config: KoinAppDeclaration? = null) {
 }
 
 val dataModule = module {
-    single { ApiService(httpClient = KtorClient.getInstance()) }
-    single { AuthService(client = KtorClient.getInstance() ) }
+//    singleOf(::UserAppSetting)
+    single { ApiService(httpClient = KtorClient().getInstance()) }
+    single { AuthService(client = KtorClient().getInstance() ) }
     factoryOf(::AuthRepositoryImpl).bind<AuthRepository>()
     single<WebSocketClient> { KtorWebSocketClient() } // Provee la implementación del cliente WebSocket
-    factoryOf(::ChatViewModel)
+
 
 }
 
@@ -52,6 +53,7 @@ val viewModelsModule = module {
     viewModelOf(::AuthViewModel)
     viewModelOf(::SearchViewModel)
     viewModelOf(::HomeViewModel)
+    viewModelOf(::ChatViewModel)
 }
 
 expect  val nativeModule: Module
